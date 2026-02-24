@@ -88,6 +88,68 @@ describe('Cypress API Tests', () => {
     cy.get('@loginRequest').its('status').should('eq', 400)
   })
 
+    // CREATE, UPDATE AND DELETE REQUESTS 
+    it('Create and Delete User', () => {
+
+      cy.request('POST', '/users', {
+        name: "Sebastian",
+        email: "sebastian@example.com",
+        age: "21"
+      })
+      .then((response) => {
+        expect(response.status).to.eq(201)
+        return response.body.data.id
+      })
+
+      .then((userID) => {
+        return cy.request('DELETE', `/users/${userID}`)
+      })
+
+      .then((response) => {
+        expect(response.status).to.eq(200)
+      })
+  })
+
+  it('Update and Delete User', () => {
+
+  // Crear usuario base
+  cy.request('POST', '/users', {
+    name: "Initial Name",
+    email: "initial@example.com",
+    age: "25"
+  })
+  .then((response) => {
+    expect(response.status).to.eq(201)
+    return response.body.data.id
+  })
+
+  // Actualizar
+  .then((userID) => {
+    return cy.request({
+      url: `/users/${userID}`,
+      method: 'PUT',
+      body: {
+        name: 'Updated Name',
+        email: 'updated@example.com'
+      }
+    }).then((res) => {
+      expect(res.status).to.eq(200)
+      expect(res.body.data.name).to.eq('Updated Name')
+      expect(res.body.data.email).to.eq('updated@example.com')
+
+      return userID
+    })
+  })
+
+  // Eliminar
+  .then((userID) => {
+    return cy.request('DELETE', `/users/${userID}`)
+  })
+
+  .then((response) => {
+    expect(response.status).to.eq(200)
+  })
+
+})
 
 });
-
