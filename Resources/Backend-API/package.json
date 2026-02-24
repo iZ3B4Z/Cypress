@@ -1,0 +1,20 @@
+{
+  "name": "user-api",
+  "version": "1.0.0",
+  "description": "Simple User API with Node.js and Express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "api",
+    "express",
+    "users"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.22.1"
+  }
+}

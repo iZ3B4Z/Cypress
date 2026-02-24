@@ -1,0 +1,1 @@
+To run the tests you must have set and have running the "Backend-API", it has its own readme.
