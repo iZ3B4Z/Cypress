@@ -11,7 +11,13 @@ app.use(express.json());
 // In-memory user storage - starts with original users + test users
 let users = [...testUsers];
 
-let nextId = 3;
+
+let nextId = users.length > 0
+  ? Math.max(...users.map(u => u.id)) + 1
+  : 1;
+
+console.log("Usuarios al iniciar:", users);
+console.log("NextId inicial:", nextId);
 
 // Token storage for authentication
 const tokens = new Map();
